@@ -20,7 +20,7 @@ pipeline {
             sh '''
             /kaniko/executor --dockerfile `pwd`/Dockerfile \
                              --context `pwd` \
-                             --destination=eiai365/k8s-kubernetes-demo:${BUILD_NUMBER}
+                             --destination=eiai365/k8s-kubernetes-demo:${BUILD_NUMBER} \
                              --custom-platform=linux/arm64
             '''
           }
