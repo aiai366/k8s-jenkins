@@ -14,6 +14,7 @@ pipeline {
 
     stage('Kaniko Build & Push Image') {
       steps {
+        echo 'Kaniko start.'
         container('kaniko') {
           script {
             sh '''
@@ -23,17 +24,20 @@ pipeline {
                              --custom-platform=linux/arm64
             '''
           }
+          echo 'Kaniko finish.'
         }
       }
     }
 
     stage('Deploy App to Kubernetes') {     
       steps {
+        echo 'Deploy start.'
         container('kubectl') {
           withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
             sh 'sed -i "s/<TAG>/${BUILD_NUMBER}/" web-app.yaml'
             sh 'kubectl apply -f web-app.yaml'
           }
+        echo 'Deploy finish.'
         }
       }
     }
