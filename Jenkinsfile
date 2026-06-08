@@ -35,7 +35,7 @@ pipeline {
         container('kubectl') {
           withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
             sh 'sed -i "s/<TAG>/${BUILD_NUMBER}/" web-app.yaml'
-            sh 'kubectl apply -f web-app.yaml --validate=ignore'
+            sh 'kubectl apply -f web-app.yaml --validate=false'
           }
         echo 'Deploy finish.'
         }
