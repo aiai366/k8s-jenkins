@@ -33,9 +33,11 @@ pipeline {
       steps {
         echo 'Deploy start.'
         container('kubectl') {
-          withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-            sh 'sed -i "s/<TAG>/${BUILD_NUMBER}/" web-app.yaml'
-            sh 'kubectl apply -f web-app.yaml --validate=false'
+          withKubeConfig([credentialsId: 'kubeconfig']) {
+            sh """
+              sed -i "s/<TAG>/${BUILD_NUMBER}/" web-app.yaml
+              kubectl apply -f web-app.yaml
+            """
           }
         echo 'Deploy finish.'
         }
