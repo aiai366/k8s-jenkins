@@ -36,7 +36,7 @@ pipeline {
           withKubeConfig([credentialsId: 'kubeconfig']) {
             sh """
               sed -i "s/<TAG>/${BUILD_NUMBER}/" web-app.yaml
-              kubectl apply -f web-app.yaml
+              kubectl apply -f web-app.yaml --validate=false
             """
           }
         echo 'Deploy finish.'
