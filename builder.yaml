@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: kaniko
-  namespace: jenkins
+  namespace: devops-tools
 spec:
   containers:
   - name: kubectl
